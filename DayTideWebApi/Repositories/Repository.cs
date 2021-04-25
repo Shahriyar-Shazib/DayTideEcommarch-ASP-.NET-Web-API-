@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace DayTide.Repositories
+namespace DayTideWebApi.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

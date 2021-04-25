@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DayTideWebApi.Repositories
 {
-    public class AdminRepository:Repository<Admin>
+    public class CategoryRepository:Repository<Category>
     {
     }
 }

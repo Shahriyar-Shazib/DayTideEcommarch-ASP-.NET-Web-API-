@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DayTide.Repositories
+namespace DayTideWebApi.Repositories
 {
     interface IRepository <TEntity> where TEntity : class
     {

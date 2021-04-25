@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace DayTide.Repositories
+namespace DayTideWebApi.Repositories
 {
     public class UserRepository : Repository<User>
     {
