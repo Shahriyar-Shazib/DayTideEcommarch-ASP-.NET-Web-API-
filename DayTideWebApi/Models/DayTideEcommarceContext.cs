@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using DayTideWebApi.Migrations;
 
 namespace DayTideWebApi.Models
 {
@@ -10,7 +11,7 @@ namespace DayTideWebApi.Models
     {
         public DayTideEcommarceContext():base("name=DayTideEcommarceConnection")
         {
-            Database.SetInitializer<DayTideEcommarceContext>(new DropCreateDatabaseIfModelChanges<DayTideEcommarceContext>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DayTideEcommarceContext,Configuration>());
         }
         public DbSet<User> Users { set; get; }
         public DbSet<Admin> Admins { set; get; }

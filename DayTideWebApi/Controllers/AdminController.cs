@@ -45,15 +45,16 @@ namespace DayTideWebApi.Controllers
             return View("Notify");
 
         }*/
-        /*
-        [HttpPost]
-        public ActionResult Notifyad(Notice notice)
+        
+        [Route("Notifyad"),HttpPut]
+        public IHttpActionResult Notifyad(Notice notice)
         {
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
-            return RedirectToAction("AdminList", "Admin");
+            return Created("abc",notice);
 
         }
+        /*
         [HttpGet]
         public ActionResult Notifymod(string id)
         {
@@ -63,15 +64,15 @@ namespace DayTideWebApi.Controllers
             ViewBag.ids = notice;
             return View("Notify");
 
-        }
-        [HttpPost]
-        public ActionResult Notifymod(Notice notice)
+        }*/
+          [Route("Notifymod"),HttpPut]
+        public IHttpActionResult Notifymod(Notice notice)
         {
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
-            return RedirectToAction("ModeratorList", "Admin");
+            return Created("abc",notice);
 
-        }
+        }/*
         [HttpGet]
         public ActionResult Notifydelman(string id)
         {
@@ -81,15 +82,15 @@ namespace DayTideWebApi.Controllers
             ViewBag.ids = notice;
             return View("Notify");
 
-        }
-        [HttpPost]
-        public ActionResult Notifydelman(Notice notice)
+        }*/
+         [Route("Notifydelman"),HttpPut]
+        public IHttpActionResult Notifydelman(Notice notice)
         {
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
-            return RedirectToAction("DeleveryManList", "Admin");
+            return Created("abc",notice);
 
-        }
+        }/*s
         [HttpGet]
         public ActionResult Notifycus(string id)
         {
@@ -99,30 +100,34 @@ namespace DayTideWebApi.Controllers
             ViewBag.ids = notice;
             return View("Notify");
 
-        }
-        [HttpPost]
-        public ActionResult Notifycus(Notice notice)
+        }*/
+         [Route("Notifycus"),HttpPut]
+        public IHttpActionResult Notifycus(Notice notice)
         {
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
-            return RedirectToAction("CustomerList", "Admin");
+            return Created("abc",notice);
 
         }
-        [HttpGet]
-        public ActionResult Detailscus(string id)
+        
+        [Route("DetailCus"),HttpGet]
+        public IHttpActionResult Detailscus(string id)
         {
-            return View(customerrRepository.GetUserById(id));
+            return Ok(customerrRepository.GetUserById(id));
         }
-        [HttpGet]
-        public ActionResult OrderDetailcus(string id)
+        
+        [Route("OrderDetailcus"),HttpGet]
+        public IHttpActionResult OrderDetailcus(string id)
         {
-            return View(order_detailRepo.GetOrderDetailByUsertId(id));
+            return Ok(order_detailRepo.GetOrderDetailByUsertId(id));
         }
-        [HttpGet]
-        public ActionResult viewApplication()
+        
+        [Route("viewApplication"),HttpGet]
+        public IHttpActionResult viewApplication()
         {
-            return View(applicationRepository.GetAll());
+            return Ok(applicationRepository.GetAll());
         }
+        /*
         [HttpGet]
         public ActionResult applicationReject(int id)
         {
