@@ -7,7 +7,7 @@
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DayTideWebApi.Models.DayTideEcommarceContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DayTideWebApi.Models.DayTideAPIContext>
     {
         public Configuration()
         {
@@ -15,7 +15,7 @@
             ContextKey = "DayTideWebApi.Models.DayTideEcommarceContext";
         }
 
-        protected override void Seed(DayTideWebApi.Models.DayTideEcommarceContext context)
+        protected override void Seed(DayTideWebApi.Models.DayTideAPIContext context)
         {
             //  This method will be called after migrating to the latest version.
 
@@ -82,17 +82,45 @@
                     context.SaveChanges();
                 }
             }
-            List<DeleveryMan> deleveryMen = new List<DeleveryMan>()
+            List<DeliveryMan> deleveryMen = new List<DeliveryMan>()
             {
-                new DeleveryMan(){DelManId= "p-1",Name="pantho",Email="pantho@gmail.com",Phone="01956424568",Address="chittigong",Salary=10000,Complete_Task=0,Picture=""},
-                 new DeleveryMan(){DelManId= "p-12",Name="hafiz",Email="hafiz@gmail.com",Phone="01956424568",Address="mymensing",Salary=5000,Complete_Task=0,Picture=""},
+                new DeliveryMan(){DelManId= "p-1",Name="pantho",Email="pantho@gmail.com",Phone="01956424568",Address="chittigong",Salary=10000,Complete_Task=0,Picture=""},
+                 new DeliveryMan(){DelManId= "p-12",Name="hafiz",Email="hafiz@gmail.com",Phone="01956424568",Address="mymensing",Salary=5000,Complete_Task=0,Picture=""},
 
             };
-            if (!context.DeleveryMen.Any())
+            if (!context.DeliveryMen.Any())
             {
                 foreach (var del in deleveryMen)
                 {
-                    context.DeleveryMen.Add(del);
+                    context.DeliveryMen.Add(del);
+                    context.SaveChanges();
+                }
+            }
+            List<Notice> notices = new List<Notice>()
+            {
+                new Notice(){Id=0,Massage="Hello",Send_by="shah-1",Send_For="shah-12",Status="Unread"},
+                 new Notice(){Id=1,Massage="Hi",Send_by="shah-12",Send_For="p-12",Status="Unread"}
+
+            };
+            if (!context.Notices.Any())
+            {
+                foreach (var notice in notices)
+                {
+                    context.Notices.Add(notice);
+                    context.SaveChanges();
+                }
+            }
+            List<Application> applications = new List<Application>()
+            {
+                new Application(){Id=0,ApplicationType="Leave",Massage="need 3 days off",SentBy="a-1",Status="Processing",Accepted_RejectedBy=null},
+                 new Application(){Id=3,ApplicationType="Argent",Massage="need to meet ",SentBy="a-12",Status="Processing",Accepted_RejectedBy=null}
+
+            };
+            if (!context.Applications.Any())
+            {
+                foreach (var app in applications)
+                {
+                    context.Applications.Add(app);
                     context.SaveChanges();
                 }
             }

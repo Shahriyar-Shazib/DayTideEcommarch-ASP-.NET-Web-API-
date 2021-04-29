@@ -25,5 +25,6 @@ namespace DayTideWebApi.Models
         public double Salary { get; set; }
        
         public string Picture { get; set; }
+       // public  ICollection<User> users  { get; set; }
     }
 }

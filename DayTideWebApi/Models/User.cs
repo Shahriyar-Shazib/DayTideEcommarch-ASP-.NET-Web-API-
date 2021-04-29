@@ -17,5 +17,6 @@ namespace DayTideWebApi.Models
         public String Type { get; set; }
         [Required, StringLength(50)]
         public string Status { get; set; }
+        //public ICollection<Admin> admins { get; set; }
     }
 }

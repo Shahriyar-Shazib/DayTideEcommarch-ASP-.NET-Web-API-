@@ -7,7 +7,7 @@ using System.Web;
 
 namespace DayTideWebApi.Models
 {
-    public class DeleveryMan
+    public class DeliveryMan
     {
         public User user { get; set; }
         [Key, StringLength(50), ForeignKey("user")]

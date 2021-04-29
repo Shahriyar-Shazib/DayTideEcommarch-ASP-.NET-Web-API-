@@ -25,7 +25,7 @@ namespace DayTideWebApi.Models
         public Customer customer { get; set; }
         [Required, StringLength(50), ForeignKey("customer")]
         public string CustomerId { get; set; }
-        public DeleveryMan delman { get; set; }
+        public DeliveryMan delman { get; set; }
         [Required, StringLength(50), ForeignKey("delman")]
         public string DelManId { get; set; }
         [Required]

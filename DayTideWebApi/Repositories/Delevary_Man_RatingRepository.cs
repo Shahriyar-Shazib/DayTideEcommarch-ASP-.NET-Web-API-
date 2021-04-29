@@ -8,9 +8,9 @@ namespace DayTideWebApi.Repositories
 {
     public class Delevary_Man_RatingRepository:Repository<Delevary_Man_RatingRepository>
     {
-        public List<Delevary_Man_Rating> GetDeleveryMenRatingById(string id)
+        public List<Delivery_Man_Rating> GetDeleveryMenRatingById(string id)
         {
-            return this.context.Delevary_Man_Ratings.Where(x => x.DelManID==id).ToList();
+            return this.context.Delivery_Man_Ratings.Where(x => x.DelManID==id).ToList();
         }
     }
 }

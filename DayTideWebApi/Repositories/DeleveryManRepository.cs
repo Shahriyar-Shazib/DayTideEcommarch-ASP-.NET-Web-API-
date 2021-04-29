@@ -6,11 +6,11 @@ using System.Web;
 
 namespace DayTideWebApi.Repositories
 {
-    public class DeleveryManRepository : Repository<DeleveryMan>
+    public class DeleveryManRepository : Repository<DeliveryMan>
     {
-        public List<DeleveryMan> GetDeleveryMenByAdd(string add)
+        public List<DeliveryMan> GetDeleveryMenByAdd(string add)
         {
-            return this.context.DeleveryMen.Where(x => x.Address.Contains(add) ).ToList();
+            return this.context.DeliveryMen.Where(x => x.Address.Contains(add) ).ToList();
         }
     }
 }

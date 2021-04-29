@@ -7,11 +7,11 @@ using DayTideWebApi.Migrations;
 
 namespace DayTideWebApi.Models
 {
-    public class DayTideEcommarceContext:DbContext
+    public class DayTideAPIContext:DbContext
     {
-        public DayTideEcommarceContext():base("name=DayTideEcommarceConnection")
+        public DayTideAPIContext():base("name=DayTideAPIConnection")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DayTideEcommarceContext,Configuration>());
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DayTideAPIContext,Configuration>());
         }
         public DbSet<User> Users { set; get; }
         public DbSet<Admin> Admins { set; get; }
@@ -20,8 +20,8 @@ namespace DayTideWebApi.Models
         public DbSet<CartBackup> CartBackups { set; get; }
         public DbSet<Category> Categories { set; get; }
         public DbSet<Customer> Customers { set; get; }
-         public DbSet<Delevary_Man_Rating> Delevary_Man_Ratings { set; get; }
-        public DbSet<DeleveryMan> DeleveryMen { set; get; }
+         public DbSet<Delivery_Man_Rating> Delivery_Man_Ratings { set; get; }
+        public DbSet<DeliveryMan> DeliveryMen { set; get; }
         public DbSet<Moderator> Moderators { set; get; }
         public DbSet<Notice> Notices { set; get; }
         public DbSet<Order_Detail> Order_Details { set; get; }

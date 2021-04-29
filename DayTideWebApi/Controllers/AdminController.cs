@@ -29,11 +29,127 @@ namespace DayTideWebApi.Controllers
         {
             return Ok(adminRepository.GetAll());
         }
-        [Route("CustomerList"),]
+        [Route("CustomerList")]
         public IHttpActionResult GetCustomerList()
         {
             return Ok(customerrRepository.GetAll());
         }
+        [Route("ModeratorList"),HttpGet]
+        public IHttpActionResult ModeratorList()    
+        {
+            if (moderatorRepository.GetAll().Count==0)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+                return Ok(moderatorRepository.GetAll());
+        }
+        [Route("DetailModerator"),HttpGet]
+        public IHttpActionResult DetailModerator(string id)
+        {
+            return Ok(moderatorRepository.GetUserById(id));
+
+        }
+        [Route("Blockmod"),HttpGet]
+        public IHttpActionResult Blockmod(string id)
+        {
+            User usr = new User();
+            usr = userRepository.GetUserById(id);
+            usr.Status = "invalid";
+            userRepository.Update(usr);
+            return ModeratorList();
+        }
+        [Route("UnBlockmod"),HttpGet]
+        public IHttpActionResult UnBlockmod(string id)
+        {
+            User usr = new User();
+            usr = userRepository.GetUserById(id);
+            usr.Status = "valid";
+            userRepository.Update(usr);
+            return ModeratorList();
+
+        }
+
+        [Route("updatesalmod"),HttpGet]
+        public IHttpActionResult updatesalmod(string id)
+        {
+            return Ok(moderatorRepository.GetUserById(id));
+        }
+        [Route("updatesalmod"),HttpPut]
+        public IHttpActionResult updatesalmod(Moderator moderator,string id)
+        {
+            moderatorRepository.Update(moderator);
+            Notice notice = new Notice();
+            notice.Massage = "Your Salary Has been Changed by Admin/Moderator Panel";
+            notice.Send_For = moderator.ModeratorId;
+            notice.Send_by =id ;
+            notice.Status = "Unread";
+            noticeRepository.Insert(notice);
+            return ModeratorList();
+        }
+        [Route("DeleveryManList"), HttpGet]
+        public IHttpActionResult DeleveryManList()
+        {
+            return Ok(delmanRepository.GetAll());
+        }
+        [Route("Blockdel"),HttpGet]
+        public IHttpActionResult Blockdel(string id)
+        {
+            User usr = new User();
+            usr = userRepository.GetUserById(id);
+            usr.Status = "invalid";
+            userRepository.Update(usr);
+            return DeleveryManList();
+
+        }
+        [Route("UnBlockdel"),HttpGet]
+        public IHttpActionResult UnBlockdel(string id)
+        {
+            User usr = new User();
+            usr = userRepository.GetUserById(id);
+            usr.Status = "valid";
+            userRepository.Update(usr);
+            return DeleveryManList();
+
+        }
+        [Route("updatesalDeletedelman"),HttpGet]
+        public IHttpActionResult updatesalDeletedelman(string id)
+        {
+            return Ok(delmanRepository.GetUserById(id));
+        }
+        [Route("updatesalDeletedelman"),HttpPut]
+        public IHttpActionResult updatesalDeletedelman(DeliveryMan delman,string id)
+        {
+            delmanRepository.Update(delman);
+            Notice notice = new Notice();
+            notice.Massage = "Your Salary Has been Changed by Admin/Moderator Panel";
+            notice.Send_For = delman.DelManId;
+            notice.Send_by = id;
+            notice.Status = "Unread";
+            noticeRepository.Insert(notice);
+            return DeleveryManList();
+        }
+
+       /* [HttpGet]
+        public ActionResult DetailDelman(string id)
+        {
+            List<Delevary_Man_Rating> delmanratinhg = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id);
+            ViewBag.comments = delmanratinhg;
+            int count = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id).Count;
+            int ratingCount = 0;
+            if (count != 0)
+            {
+                foreach (var v in delmanratinhg)
+                {
+                    ratingCount = ratingCount + Convert.ToInt32(v.Rating);
+                }
+                float finalrating = (ratingCount / count);
+                ViewBag.Rating = Math.Ceiling(finalrating);
+            }
+            else
+                ViewBag.Rating = 0;
+            return View(delmanRepository.GetUserById(id));
+
+        }*/
         /*
         [HttpGet]
         public ActionResult Notifyad(string id)
@@ -45,8 +161,8 @@ namespace DayTideWebApi.Controllers
             return View("Notify");
 
         }*/
-        
-        [Route("Notifyad"),HttpPut]
+
+        [Route("Notifyad"),HttpPost]
         public IHttpActionResult Notifyad(Notice notice)
         {
             notice.Status = "Unread";
@@ -65,7 +181,7 @@ namespace DayTideWebApi.Controllers
             return View("Notify");
 
         }*/
-          [Route("Notifymod"),HttpPut]
+          [Route("Notifymod"),HttpPost]
         public IHttpActionResult Notifymod(Notice notice)
         {
             notice.Status = "Unread";
@@ -83,7 +199,7 @@ namespace DayTideWebApi.Controllers
             return View("Notify");
 
         }*/
-         [Route("Notifydelman"),HttpPut]
+         [Route("Notifydelman"),HttpPost]
         public IHttpActionResult Notifydelman(Notice notice)
         {
             notice.Status = "Unread";
@@ -101,7 +217,7 @@ namespace DayTideWebApi.Controllers
             return View("Notify");
 
         }*/
-         [Route("Notifycus"),HttpPut]
+         [Route("Notifycus"),HttpPost]
         public IHttpActionResult Notifycus(Notice notice)
         {
             notice.Status = "Unread";
@@ -127,386 +243,285 @@ namespace DayTideWebApi.Controllers
         {
             return Ok(applicationRepository.GetAll());
         }
-        /*
-        [HttpGet]
-        public ActionResult applicationReject(int id)
+        
+        [Route("applicationReject"),HttpPut]
+        public IHttpActionResult applicationReject(int id,string userid)
         {
             Application app = applicationRepository.GetApplicationById(id);
             app.Status = "Rejected";
-            app.Accepted_RejectedBy = Session["UserId"].ToString();
+            app.Accepted_RejectedBy = userid;
             applicationRepository.Update(app);
             Notice notice = new Notice();
             notice.Massage = "Your Application Is Rejected For Some Internal Issue Please Contuct Admin panel For More Detail";
             notice.Send_For = app.SentBy;
-            notice.Send_by = Session["UserId"].ToString();
+            notice.Send_by = userid;
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
-            return RedirectToAction("ViewApplication", "Admin");
+            return viewApplication(); ;
 
         }
-        [HttpGet]
-        public ActionResult applicationAccept(int id)
+        [Route("applicationAccept"), HttpPut]
+        public IHttpActionResult applicationAccept(int id,string userid)
         {
             Application app = applicationRepository.GetApplicationById(id);
             app.Status = "Accepted";
-            app.Accepted_RejectedBy = Session["UserId"].ToString();
+            app.Accepted_RejectedBy =userid;
             applicationRepository.Update(app);
             Notice notice = new Notice();
             notice.Massage = "Your Application Is Accepted By Our Admin Panel";
             notice.Send_For = app.SentBy;
-            notice.Send_by = Session["UserId"].ToString();
+            notice.Send_by =userid;
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
-            return RedirectToAction("ViewApplication", "Admin");
+            return viewApplication();
 
         }
-        [HttpGet]
-        public ActionResult applicationDetail(int id)
+        [Route("applicationDetail"),HttpGet]
+        public IHttpActionResult applicationDetail(int id)
         {
-            return View(applicationRepository.GetApplicationById(id));
+            return Ok(applicationRepository.GetApplicationById(id));
         }
-        [HttpGet]
-        public ActionResult Mynotification()
+        
+        [Route("Mynotification"),HttpGet]
+        public IHttpActionResult Mynotification(string id)
         {
-            return View(noticeRepository.GetNoticeByIdSend_For(Session["UserId"].ToString()));
+            return Ok(noticeRepository.GetNoticeByIdSend_For(id));
         }
-        [HttpGet]
-        public ActionResult EditNotice(int id)
+        [Route("EditNotice"), HttpGet]
+        public IHttpActionResult EditNotice(int id)
         {
-            return View(noticeRepository.GetNoticeById(id));
+            return Ok(noticeRepository.GetNoticeById(id));
         }
-        [HttpPost]
-        public ActionResult EditNotice(Notice notice)
+        [Route("EditNotice"),HttpPut]
+        public IHttpActionResult EditNotice(Notice notice)
         {
             noticeRepository.Update(notice);
-            return RedirectToAction("PostedNotification", "Admin");
+            return Created("PostedNotification", notice);
         }
-        [HttpGet]
-        public ActionResult viewFullMassege(int id)
+        
+        [Route("viewFullMassege"), HttpGet]
+        public IHttpActionResult viewFullMassege(int id)
         {
             Notice notice = noticeRepository.GetNoticeById(id);
             notice.Status = "read";
             noticeRepository.Update(notice);
-            return View(notice);
+            return Ok(notice);
         }
-        [HttpGet]
-        public ActionResult DeleteNotice(int id)
-        {
-            noticeRepository.Delete(id);
-            return RedirectToAction("PostedNotification", "Admin");
+        [Route("DeleteNotice"),HttpDelete]
+         public IHttpActionResult DeleteNotice(int id)
+         {
+             noticeRepository.Delete(id);
+             return StatusCode(HttpStatusCode.NoContent);
         }
-        [HttpGet]
-        public ActionResult PostedNotification()
-        {
-            return View(noticeRepository.GetNoticeByIdSend_by(Session["UserId"].ToString()));
-        }
-
-        [HttpGet]
-        public ActionResult ModeratorList()
-        {
-            return View(moderatorRepository.GetAll());
-        }
-        [HttpGet]
-        public ActionResult DeleveryManList()
-        {
-            return View(delmanRepository.GetAll());
-        }
-        [HttpGet]
-        public ActionResult OrderRequest()
-        {
-            return View(orderreqRepo.GetAll());
-        }
-        [HttpGet]
-        public ActionResult Editdelreq(int id)
-        {
-            OrderRequest ordrreq = new OrderRequest();
-            ordrreq = orderreqRepo.GetOrderRequestById(id);
-
-            ViewBag.delman = delmanRepository.GetDeleveryMenByAdd(ordrreq.District);
-
-            return View(orderreqRepo.GetOrderRequestById(id));
-        }
-        [HttpPost]
-        public ActionResult Editdelreq(OrderRequest orderreq, string DelManId)
-        {
-            Order_Detail order_detail = new Order_Detail();
-            order_detail.OrderId = orderreq.OrderId;
-            order_detail.Date = orderreq.Date;
-            order_detail.Address = orderreq.Address;
-            order_detail.District = orderreq.District;
-            order_detail.Amount = orderreq.Amount;
-            order_detail.Payment_Type = orderreq.Payment_Type;
-            order_detail.CustomerId = orderreq.CustomerId;
-            order_detail.Status = "Processing";
-            order_detail.DelManId = DelManId;
-            OrderRequest ordrreq = new OrderRequest();
-            order_detailRepo.Insert(order_detail);
-            orderreqRepo.Delete(orderreq.OrderId);
-
-            return RedirectToAction("OrderHistory", "Admin");
-        }
-        [HttpGet]
-        public ActionResult Deletedelreq(int id)
-        {
-
-            orderreqRepo.Delete(id);
-            return RedirectToAction("OrderRequest", "Admin");
-
-        }
-        [HttpGet]
-        public ActionResult OrderHistory()
-        {
-
-            return View(order_detailRepo.GetAll());
-
-        }
-        [HttpGet]
-        public ActionResult DetailModerator(string id)
-        {
-            return View(moderatorRepository.GetUserById(id));
-
-        }
-        [HttpGet]
-        public ActionResult Blockmod(string id)
-        {
-            User usr = new User();
-            usr = userRepository.GetUserById(id);
-            usr.Status = "invalid";
-            userRepository.Update(usr);
-            return RedirectToAction("ModeratorList", "Admin");
-
-        }
-        [HttpGet]
-        public ActionResult UnBlockmod(string id)
-        {
-            User usr = new User();
-            usr = userRepository.GetUserById(id);
-            usr.Status = "valid";
-            userRepository.Update(usr);
-            return RedirectToAction("ModeratorList", "Admin");
-
-        }
-        [HttpGet]
-        public ActionResult updatesalmod(string id)
-        {
-            return View(moderatorRepository.GetUserById(id));
-        }
-        [HttpPost]
-        public ActionResult updatesalmod(Moderator moderator)
-        {
-            moderatorRepository.Update(moderator);
-            Notice notice = new Notice();
-            notice.Massage = "Your Salary Has been Changed by Admin/Moderator Panel";
-            notice.Send_For = moderator.ModeratorId;
-            notice.Send_by = Session["UserId"].ToString();
-            notice.Status = "Unread";
-            noticeRepository.Insert(notice);
-            return RedirectToAction("ModeratorList", "Admin");
-        }
-        [HttpGet]
-        public ActionResult DetailDelman(string id)
-        {
-            List<Delevary_Man_Rating> delmanratinhg = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id);
-            ViewBag.comments = delmanratinhg;
-            int count = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id).Count;
-            int ratingCount = 0;
-            if (count != 0)
+         
+         [Route("PostedNotification"), HttpGet]
+         public IHttpActionResult PostedNotification(string id)
+         {
+             return Ok(noticeRepository.GetNoticeByIdSend_by(id));
+         }
+        
+         [Route("OrderRequest"),HttpGet]
+         public IHttpActionResult OrderRequest()
+         {
+            if (orderreqRepo.GetAll().Count==0)
             {
-                foreach (var v in delmanratinhg)
-                {
-                    ratingCount = ratingCount + Convert.ToInt32(v.Rating);
-                }
-                float finalrating = (ratingCount / count);
-                ViewBag.Rating = Math.Ceiling(finalrating);
+                return StatusCode(HttpStatusCode.NoContent);
             }
-            else
-                ViewBag.Rating = 0;
-            return View(delmanRepository.GetUserById(id));
+             return Ok(orderreqRepo.GetAll());
+        }
+         [HttpGet]
+        /* public ActionResult Editdelreq(int id)
+         {
+             OrderRequest ordrreq = new OrderRequest();
+             ordrreq = orderreqRepo.GetOrderRequestById(id);
 
-        }
-        [HttpGet]
-        public ActionResult Blockdel(string id)
-        {
-            User usr = new User();
-            usr = userRepository.GetUserById(id);
-            usr.Status = "invalid";
-            userRepository.Update(usr);
-            return RedirectToAction("DeleveryManList", "Admin");
+             ViewBag.delman = delmanRepository.GetDeleveryMenByAdd(ordrreq.District);
 
+             return View(orderreqRepo.GetOrderRequestById(id));
         }
-        [HttpGet]
-        public ActionResult UnBlockdel(string id)
-        {
-            User usr = new User();
-            usr = userRepository.GetUserById(id);
-            usr.Status = "valid";
-            userRepository.Update(usr);
-            return RedirectToAction("DeleveryManList", "Admin");
+         [HttpPost]
+         public ActionResult Editdelreq(OrderRequest orderreq, string DelManId)
+         {
+             Order_Detail order_detail = new Order_Detail();
+             order_detail.OrderId = orderreq.OrderId;
+             order_detail.Date = orderreq.Date;
+             order_detail.Address = orderreq.Address;
+             order_detail.District = orderreq.District;
+             order_detail.Amount = orderreq.Amount;
+             order_detail.Payment_Type = orderreq.Payment_Type;
+             order_detail.CustomerId = orderreq.CustomerId;
+             order_detail.Status = "Processing";
+             order_detail.DelManId = DelManId;
+             OrderRequest ordrreq = new OrderRequest();
+             order_detailRepo.Insert(order_detail);
+             orderreqRepo.Delete(orderreq.OrderId);
 
-        }
-        [HttpGet]
-        public ActionResult updatesalDeletedelman(string id)
-        {
-            return View(delmanRepository.GetUserById(id));
-        }
-        [HttpPost]
-        public ActionResult updatesalDeletedelman(DeleveryMan delman)
-        {
-            delmanRepository.Update(delman);
-            Notice notice = new Notice();
-            notice.Massage = "Your Salary Has been Changed by Admin/Moderator Panel";
-            notice.Send_For = delman.DelManId;
-            notice.Send_by = Session["UserId"].ToString();
-            notice.Status = "Unread";
-            noticeRepository.Insert(notice);
-            return RedirectToAction("DeleveryManList", "Admin");
-        }
-        [HttpGet]
-        public ActionResult AddAdmin()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult AddAdmin(Admin admin)
-        {
-            if (userRepository.GetUserById(admin.AdminId) == null)
-            {
-                User usr = new User();
-                usr.UserId = admin.AdminId;
-                usr.Password = "1";
-                usr.Type = "Admin";
-                usr.Status = "valid";
-                userRepository.Insert(usr);
-                adminRepository.Insert(admin);
-                return RedirectToAction("AdminList", "Admin");
-            }
-            else ViewBag.errmsg = "Invalid USerID";
-            return View(admin);
+             return RedirectToAction("OrderHistory", "Admin");
+         }*/
+         [Route("Deletedelreq"),HttpDelete]
+         public IHttpActionResult Deletedelreq(int id)
+         {
 
-        }
-        [HttpGet]
-        public ActionResult Deletemod(string id)
-        {
-            moderatorRepository.DeleteUser(id);
-            userRepository.DeleteUser(id);
-            return RedirectToAction("ModeratorList", "Admin");
-        }
-        [HttpGet]
-        public ActionResult Deletedelman(string id)
-        {
-            delmanRepository.DeleteUser(id);
-            userRepository.DeleteUser(id);
-            return RedirectToAction("ModeratorList", "Admin");
-        }
-        [HttpGet]
-        public ActionResult Adprofile()
-        {
-            return View(adminRepository.GetUserById(Session["UserId"].ToString()));
-        }
-        [HttpGet]
-        public ActionResult AddModerator()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult AddModerator(Moderator moderator)
-        {
-            if (userRepository.GetUserById(moderator.ModeratorId) == null)
-            {
-                User usr = new User();
-                usr.UserId = moderator.ModeratorId;
-                usr.Password = "1";
-                usr.Type = "Moderator";
-                usr.Status = "valid";
-                userRepository.Insert(usr);
-                moderatorRepository.Insert(moderator);
-                return RedirectToAction("ModeratorList", "Admin");
-            }
-            else ViewBag.errmsg = "Invalid UserID";
-            return View(moderator);
-        }
-        [HttpGet]
-        public ActionResult AddDelMan()
-        {
-            return View();
-        }
-        [HttpGet]
-        public ActionResult DelManReq()
-        {
-            return View(userRepository.GetUserSignUpReq());
-        }
-        [HttpGet]
-        public ActionResult DeleteDelSignup(string id)
-        {
-            delmanRepository.DeleteUser(id);
-            userRepository.DeleteUser(id);
-            return RedirectToAction("DelManReq", "Admin");
-        }
-        [HttpGet]
-        public ActionResult EditDelSignup(string id)
-        {
-            return View(delmanRepository.GetUserById(id));
-        }
-        [HttpPost]
-        public ActionResult EditDelSignup(User user, DeleveryMan delman)
-        {
-            user.Status = "valid";
-            delmanRepository.Update(delman);
-            userRepository.Update(user);
-            return RedirectToAction("DelManReq", "Admin");
-        }
-        [HttpPost]
-        public ActionResult AddDelMan(DeleveryMan delman)
-        {
-            if (userRepository.GetUserById(delman.DelManId) == null)
-            {
-                User usr = new User();
-                usr.UserId = delman.DelManId;
-                usr.Password = "1";
-                usr.Type = "Delivery Man";
-                usr.Status = "valid";
-                userRepository.Insert(usr);
-                delmanRepository.Insert(delman);
-                return RedirectToAction("DeleveryManList", "Admin");
-            }
-            else ViewBag.errmsg = "Invalid UserID";
-            return View(delman);
+             orderreqRepo.Delete(id);
+             return StatusCode(HttpStatusCode.NoContent);
 
-        }
-        [HttpGet]
-        public ActionResult EditBio(string id)
-        {
-            return View(adminRepository.GetUserById(id));
-        }
-        [HttpPost]
-        public ActionResult EditBio(Admin admin, HttpPostedFileBase Picture)
-        {
-            if (Picture == null)
-            {
-                Session["Name"] = admin.Name;
-                adminRepository.Update(admin);
-                return RedirectToAction("Adprofile", "Admin");
-            }
-            else if (Picture != null)
-            {
-                string path = Server.MapPath("~/Content/Users");
-                string filename = Path.GetFileName(Picture.FileName);
-                string fullpath = Path.Combine(path, filename);
-                Picture.SaveAs(fullpath);
+         }
+         [Route("OrderHistory"),HttpGet]
+         public IHttpActionResult OrderHistory()
+         {
 
-                admin.Picture = filename;
+             return Ok(order_detailRepo.GetAll());
 
-                Session["Name"] = admin.Name;
-                Session["Picture"] = filename;
+        }/*
+       
+        
+        
+         [HttpGet]
+         public ActionResult AddAdmin()
+         {
+             return View();
+         }
+         [HttpPost]
+         public ActionResult AddAdmin(Admin admin)
+         {
+             if (userRepository.GetUserById(admin.AdminId) == null)
+             {
+                 User usr = new User();
+                 usr.UserId = admin.AdminId;
+                 usr.Password = "1";
+                 usr.Type = "Admin";
+                 usr.Status = "valid";
+                 userRepository.Insert(usr);
+                 adminRepository.Insert(admin);
+                 return RedirectToAction("AdminList", "Admin");
+             }
+             else ViewBag.errmsg = "Invalid USerID";
+             return View(admin);
 
-                adminRepository.Update(admin);
+         }
+         [HttpGet]
+         public ActionResult Deletemod(string id)
+         {
+             moderatorRepository.DeleteUser(id);
+             userRepository.DeleteUser(id);
+             return RedirectToAction("ModeratorList", "Admin");
+         }
+         [HttpGet]
+         public ActionResult Deletedelman(string id)
+         {
+             delmanRepository.DeleteUser(id);
+             userRepository.DeleteUser(id);
+             return RedirectToAction("ModeratorList", "Admin");
+         }
+         [HttpGet]
+         public ActionResult Adprofile()
+         {
+             return View(adminRepository.GetUserById(Session["UserId"].ToString()));
+         }
+         [HttpGet]
+         public ActionResult AddModerator()
+         {
+             return View();
+         }
+         [HttpPost]
+         public ActionResult AddModerator(Moderator moderator)
+         {
+             if (userRepository.GetUserById(moderator.ModeratorId) == null)
+             {
+                 User usr = new User();
+                 usr.UserId = moderator.ModeratorId;
+                 usr.Password = "1";
+                 usr.Type = "Moderator";
+                 usr.Status = "valid";
+                 userRepository.Insert(usr);
+                 moderatorRepository.Insert(moderator);
+                 return RedirectToAction("ModeratorList", "Admin");
+             }
+             else ViewBag.errmsg = "Invalid UserID";
+             return View(moderator);
+         }
+         [HttpGet]
+         public ActionResult AddDelMan()
+         {
+             return View();
+         }
+         [HttpGet]
+         public ActionResult DelManReq()
+         {
+             return View(userRepository.GetUserSignUpReq());
+         }
+         [HttpGet]
+         public ActionResult DeleteDelSignup(string id)
+         {
+             delmanRepository.DeleteUser(id);
+             userRepository.DeleteUser(id);
+             return RedirectToAction("DelManReq", "Admin");
+         }
+         [HttpGet]
+         public ActionResult EditDelSignup(string id)
+         {
+             return View(delmanRepository.GetUserById(id));
+         }
+         [HttpPost]
+         public ActionResult EditDelSignup(User user, DeleveryMan delman)
+         {
+             user.Status = "valid";
+             delmanRepository.Update(delman);
+             userRepository.Update(user);
+             return RedirectToAction("DelManReq", "Admin");
+         }
+         [HttpPost]
+         public ActionResult AddDelMan(DeleveryMan delman)
+         {
+             if (userRepository.GetUserById(delman.DelManId) == null)
+             {
+                 User usr = new User();
+                 usr.UserId = delman.DelManId;
+                 usr.Password = "1";
+                 usr.Type = "Delivery Man";
+                 usr.Status = "valid";
+                 userRepository.Insert(usr);
+                 delmanRepository.Insert(delman);
+                 return RedirectToAction("DeleveryManList", "Admin");
+             }
+             else ViewBag.errmsg = "Invalid UserID";
+             return View(delman);
 
-                return RedirectToAction("AdProfile", "Admin");
-            }
-            else
-                return RedirectToAction("AdProfile", "Admin");
-        }
-*/
+         }
+         [HttpGet]
+         public ActionResult EditBio(string id)
+         {
+             return View(adminRepository.GetUserById(id));
+         }
+         [HttpPost]
+         public ActionResult EditBio(Admin admin, HttpPostedFileBase Picture)
+         {
+             if (Picture == null)
+             {
+                 Session["Name"] = admin.Name;
+                 adminRepository.Update(admin);
+                 return RedirectToAction("Adprofile", "Admin");
+             }
+             else if (Picture != null)
+             {
+                 string path = Server.MapPath("~/Content/Users");
+                 string filename = Path.GetFileName(Picture.FileName);
+                 string fullpath = Path.Combine(path, filename);
+                 Picture.SaveAs(fullpath);
+
+                 admin.Picture = filename;
+
+                 Session["Name"] = admin.Name;
+                 Session["Picture"] = filename;
+
+                 adminRepository.Update(admin);
+
+                 return RedirectToAction("AdProfile", "Admin");
+             }
+             else
+                 return RedirectToAction("AdProfile", "Admin");
+         }
+ */
 
     }
 }

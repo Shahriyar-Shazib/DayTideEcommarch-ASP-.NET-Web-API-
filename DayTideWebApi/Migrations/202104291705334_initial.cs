@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -40,7 +40,7 @@
                     {
                         Id = c.Int(nullable: false, identity: true),
                         ApplicationType = c.String(nullable: false, maxLength: 50),
-                        Massage = c.String(nullable: false, maxLength: 100),
+                        Massage = c.String(nullable: false),
                         SentBy = c.String(nullable: false, maxLength: 128),
                         Status = c.String(nullable: false),
                         Accepted_RejectedBy = c.String(maxLength: 128),
@@ -101,7 +101,7 @@
                 .Index(t => t.CustomerId);
             
             CreateTable(
-                "dbo.Delevary_Man_Rating",
+                "dbo.Delivery_Man_Rating",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -112,12 +112,12 @@
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
-                .ForeignKey("dbo.DeleveryMen", t => t.DelManID, cascadeDelete: true)
+                .ForeignKey("dbo.DeliveryMen", t => t.DelManID, cascadeDelete: true)
                 .Index(t => t.DelManID)
                 .Index(t => t.CustomerId);
             
             CreateTable(
-                "dbo.DeleveryMen",
+                "dbo.DeliveryMen",
                 c => new
                     {
                         DelManId = c.String(nullable: false, maxLength: 128),
@@ -181,7 +181,7 @@
                     })
                 .PrimaryKey(t => t.OrderId)
                 .ForeignKey("dbo.Customers", t => t.CustomerId, cascadeDelete: true)
-                .ForeignKey("dbo.DeleveryMen", t => t.DelManId, cascadeDelete: true)
+                .ForeignKey("dbo.DeliveryMen", t => t.DelManId, cascadeDelete: true)
                 .Index(t => t.CustomerId)
                 .Index(t => t.DelManId);
             
@@ -242,14 +242,14 @@
             DropForeignKey("dbo.Products", "CategoryId", "dbo.Categories");
             DropForeignKey("dbo.Product_Rating", "CustomerId", "dbo.Customers");
             DropForeignKey("dbo.OrderRequests", "CustomerId", "dbo.Customers");
-            DropForeignKey("dbo.Order_Detail", "DelManId", "dbo.DeleveryMen");
+            DropForeignKey("dbo.Order_Detail", "DelManId", "dbo.DeliveryMen");
             DropForeignKey("dbo.Order_Detail", "CustomerId", "dbo.Customers");
             DropForeignKey("dbo.Notices", "Send_by", "dbo.Users");
             DropForeignKey("dbo.Notices", "Send_For", "dbo.Users");
             DropForeignKey("dbo.Moderators", "ModeratorId", "dbo.Users");
-            DropForeignKey("dbo.Delevary_Man_Rating", "DelManID", "dbo.DeleveryMen");
-            DropForeignKey("dbo.DeleveryMen", "DelManId", "dbo.Users");
-            DropForeignKey("dbo.Delevary_Man_Rating", "CustomerId", "dbo.Customers");
+            DropForeignKey("dbo.Delivery_Man_Rating", "DelManID", "dbo.DeliveryMen");
+            DropForeignKey("dbo.DeliveryMen", "DelManId", "dbo.Users");
+            DropForeignKey("dbo.Delivery_Man_Rating", "CustomerId", "dbo.Customers");
             DropForeignKey("dbo.Customers", "CustomerId", "dbo.Users");
             DropForeignKey("dbo.Application", "Accepted_RejectedBy", "dbo.Users");
             DropForeignKey("dbo.Application", "SentBy", "dbo.Users");
@@ -263,9 +263,9 @@
             DropIndex("dbo.Notices", new[] { "Send_by" });
             DropIndex("dbo.Notices", new[] { "Send_For" });
             DropIndex("dbo.Moderators", new[] { "ModeratorId" });
-            DropIndex("dbo.DeleveryMen", new[] { "DelManId" });
-            DropIndex("dbo.Delevary_Man_Rating", new[] { "CustomerId" });
-            DropIndex("dbo.Delevary_Man_Rating", new[] { "DelManID" });
+            DropIndex("dbo.DeliveryMen", new[] { "DelManId" });
+            DropIndex("dbo.Delivery_Man_Rating", new[] { "CustomerId" });
+            DropIndex("dbo.Delivery_Man_Rating", new[] { "DelManID" });
             DropIndex("dbo.Customers", new[] { "CustomerId" });
             DropIndex("dbo.Application", new[] { "Accepted_RejectedBy" });
             DropIndex("dbo.Application", new[] { "SentBy" });
@@ -276,8 +276,8 @@
             DropTable("dbo.Order_Detail");
             DropTable("dbo.Notices");
             DropTable("dbo.Moderators");
-            DropTable("dbo.DeleveryMen");
-            DropTable("dbo.Delevary_Man_Rating");
+            DropTable("dbo.DeliveryMen");
+            DropTable("dbo.Delivery_Man_Rating");
             DropTable("dbo.Customers");
             DropTable("dbo.Categories");
             DropTable("dbo.Carts");

@@ -94,5 +94,8 @@ E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\Sys
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Http.WebHost.xml
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.CopyComplete
-E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.InitialCreate.resources
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Cors.dll
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Http.Cors.dll
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Http.Cors.xml
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.initial.resources
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.GenerateResource.cache
