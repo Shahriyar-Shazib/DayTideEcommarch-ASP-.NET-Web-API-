@@ -27,21 +27,81 @@ namespace DayTideWebApi.Controllers
         [Route("Adminlist")]
         public IHttpActionResult GetAdminList()
         {
-            return Ok(adminRepository.GetAll());
+            using (DayTideAPIContext db = new  DayTideAPIContext())
+            {
+                List<Admin> admin = db.Admins.ToList();
+                List<User> user = db.Users.ToList();
+
+                var ComplexAdmin = from u in user
+                              join a in admin on u.UserId equals a.AdminId into table1
+                              from a in table1.ToList()
+                              select new ComplexAdmin
+                              {
+                                  user=u,
+                                  admin=a
+                              };
+                if(!ComplexAdmin.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                
+                // return View(request);
+                return Ok(ComplexAdmin);
+            }
+           
         }
         [Route("CustomerList")]
         public IHttpActionResult GetCustomerList()
         {
-            return Ok(customerrRepository.GetAll());
+            using (DayTideAPIContext db = new DayTideAPIContext())
+            {
+                List<Customer> customer = db.Customers.ToList();
+                List<User> user = db.Users.ToList();
+
+                var ComplexCustomer = from u in user
+                                       join a in customer on u.UserId equals a.CustomerId into table1
+                                       from a in table1.ToList()
+                                       select new ComplexCustomer
+                                       {
+                                           user = u,
+                                           customer = a
+                                       };
+                if (!ComplexCustomer.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+
+                // return View(request);
+                return Ok(ComplexCustomer);
+            }
+
+            
         }
         [Route("ModeratorList"),HttpGet]
         public IHttpActionResult ModeratorList()    
         {
-            if (moderatorRepository.GetAll().Count==0)
+            using (DayTideAPIContext db = new DayTideAPIContext())
             {
-                return StatusCode(HttpStatusCode.NoContent);
+                List<Moderator> moderator = db.Moderators.ToList();
+                List<User> user = db.Users.ToList();
+
+                var ComplexModerator = from u in user
+                                       join a in moderator on u.UserId equals a.ModeratorId into table1
+                                       from a in table1.ToList()
+                                       select new ComplexModerator
+                                       {
+                                           user = u,
+                                           moderator = a
+                                       };
+                if (!ComplexModerator.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+
+                // return View(request);
+                return Ok(ComplexModerator);
             }
-                return Ok(moderatorRepository.GetAll());
+           
         }
         [Route("DetailModerator"),HttpGet]
         public IHttpActionResult DetailModerator(string id)
@@ -89,7 +149,29 @@ namespace DayTideWebApi.Controllers
         [Route("DeleveryManList"), HttpGet]
         public IHttpActionResult DeleveryManList()
         {
-            return Ok(delmanRepository.GetAll());
+            using (DayTideAPIContext db = new DayTideAPIContext())
+            {
+                List<DeliveryMan> deliveryMen = db.DeliveryMen.ToList();
+                List<User> user = db.Users.ToList();
+
+                var ComplexDelMan = from u in user
+                                       join a in deliveryMen on u.UserId equals a.DelManId into table1
+                                       from a in table1.ToList()
+                                       select new ComplexDelMan
+                                       {
+                                           user = u,
+                                           deliveryMan = a
+                                       };
+                if (!ComplexDelMan.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+
+                // return View(request);
+                return Ok(ComplexDelMan);
+            }
+
+            //return Ok(delmanRepository.GetAll());
         }
         [Route("Blockdel"),HttpGet]
         public IHttpActionResult Blockdel(string id)
