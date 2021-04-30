@@ -104,13 +104,14 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ModeratorController.cs" />
     <Compile Include="Controllers\UseresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104291705334_initial.cs" />
-    <Compile Include="Migrations\202104291705334_initial.designer.cs">
-      <DependentUpon>202104291705334_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202104300815249_InitialDb.cs" />
+    <Compile Include="Migrations\202104300815249_InitialDb.designer.cs">
+      <DependentUpon>202104300815249_InitialDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -134,10 +135,12 @@
     <Compile Include="Models\Notice.cs" />
     <Compile Include="Models\OrderDetailsViewModel.cs" />
     <Compile Include="Models\OrderRequest.cs" />
+    <Compile Include="Models\Orders.cs" />
     <Compile Include="Models\Order_Detail.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductViewModelDemo.cs" />
     <Compile Include="Models\Product_Rating.cs" />
+    <Compile Include="Models\Request.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AdminRepository.cs" />
@@ -147,8 +150,8 @@
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\ComplexAdminRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
-    <Compile Include="Repositories\Delevary_Man_RatingRepository.cs" />
-    <Compile Include="Repositories\DeleveryManRepository.cs" />
+    <Compile Include="Repositories\Delivery_Man_RatingRepository.cs" />
+    <Compile Include="Repositories\DeliveryManRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\ModeratorRepository.cs" />
@@ -173,8 +176,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202104291705334_initial.resx">
-      <DependentUpon>202104291705334_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202104300815249_InitialDb.resx">
+      <DependentUpon>202104300815249_InitialDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -12,11 +12,11 @@ namespace DayTideWebApi.Controllers
     [RoutePrefix("api/Admin")]
     public class AdminController : ApiController
     {
-        Delevary_Man_RatingRepository delevary_Man_RatingRepository = new Delevary_Man_RatingRepository();
+        Delivery_Man_RatingRepository delevary_Man_RatingRepository = new Delivery_Man_RatingRepository();
         AdminRepository adminRepository = new AdminRepository();
         ModeratorRepository moderatorRepository = new ModeratorRepository();
         CustomerRepository customerrRepository = new CustomerRepository();
-        DeleveryManRepository delmanRepository = new DeleveryManRepository();
+        DeliveryManRepository delmanRepository = new DeliveryManRepository();
         UserRepository userRepository = new UserRepository();
         ApplicationRepository applicationRepository = new ApplicationRepository();
         NoticeRepository noticeRepository = new NoticeRepository();

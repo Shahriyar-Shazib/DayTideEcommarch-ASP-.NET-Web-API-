@@ -11,7 +11,8 @@ namespace DayTideWebApi.Models
     {
         public DayTideAPIContext():base("name=DayTideAPIConnection")
         {
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DayTideAPIContext,Configuration>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DayTideAPIContext>());
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<DayTideAPIContext,Configuration>());
         }
         public DbSet<User> Users { set; get; }
         public DbSet<Admin> Admins { set; get; }

@@ -25,5 +25,7 @@ namespace DayTideWebApi.Models
         public string Picture { get; set; }
         [Required]
         public int Complete_Task { get; set; }
+        [Required]
+        public int In_Service { get; set; }
     }
 }

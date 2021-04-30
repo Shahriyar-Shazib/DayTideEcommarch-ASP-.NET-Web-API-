@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DayTideWebApi.Repositories
 {
-    public class Delevary_Man_RatingRepository:Repository<Delevary_Man_RatingRepository>
+    public class Delivery_Man_RatingRepository:Repository<Delivery_Man_RatingRepository>
     {
         public List<Delivery_Man_Rating> GetDeleveryMenRatingById(string id)
         {

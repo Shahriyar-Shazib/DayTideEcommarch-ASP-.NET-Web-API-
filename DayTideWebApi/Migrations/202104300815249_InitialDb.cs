@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class InitialDb : DbMigration
     {
         public override void Up()
         {
@@ -128,6 +128,7 @@
                         Salary = c.Double(nullable: false),
                         Picture = c.String(),
                         Complete_Task = c.Int(nullable: false),
+                        In_Service = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.DelManId)
                 .ForeignKey("dbo.Users", t => t.DelManId)

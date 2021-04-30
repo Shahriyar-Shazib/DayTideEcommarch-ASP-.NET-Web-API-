@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DayTideWebApi.Repositories
 {
-    public class DeleveryManRepository : Repository<DeliveryMan>
+    public class DeliveryManRepository : Repository<DeliveryMan>
     {
         public List<DeliveryMan> GetDeleveryMenByAdd(string add)
         {
