@@ -98,7 +98,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\TestAuthenticationAttribute.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
+    <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UseresController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -112,12 +117,14 @@
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartBackup.cs" />
+    <Compile Include="Models\CartViewModelDemo.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\ComplexDelMan.cs" />
     <Compile Include="Models\ComplexCustomer.cs" />
     <Compile Include="Models\ComplexModerator.cs" />
     <Compile Include="Models\ComplexAdmin.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerViewModelDemo.cs" />
     <Compile Include="Models\DayTideAPIContext.cs" />
     <Compile Include="Models\Delivery_Man_Rating.cs" />
     <Compile Include="Models\DeliveryMan.cs" />
@@ -125,9 +132,11 @@
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Moderator.cs" />
     <Compile Include="Models\Notice.cs" />
+    <Compile Include="Models\OrderDetailsViewModel.cs" />
     <Compile Include="Models\OrderRequest.cs" />
     <Compile Include="Models\Order_Detail.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductViewModelDemo.cs" />
     <Compile Include="Models\Product_Rating.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -146,6 +155,7 @@
     <Compile Include="Repositories\NoticeRepository.cs" />
     <Compile Include="Repositories\OrderRequestRepository.cs" />
     <Compile Include="Repositories\Order_DetailRepository.cs" />
+    <Compile Include="Repositories\ProductRatingRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />

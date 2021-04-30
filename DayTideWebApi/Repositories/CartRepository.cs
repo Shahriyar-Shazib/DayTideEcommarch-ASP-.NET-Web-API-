@@ -49,5 +49,12 @@ namespace DayTideWebApi.Repositories
 
         }
 
+
+        public Cart GetCartByProdIDCusID(int proId, string cusID)
+        {
+            return this.context.Carts.Where(x => x.ProductId == proId).Where(u => u.CustomerId == cusID).FirstOrDefault();
+        }
+
+
     }
 }

@@ -24,5 +24,74 @@ namespace DayTideWebApi.Repositories
         }
 
 
+
+
+
+        public List<ProductViewModelDemo> GetProductWithCategory()
+        {
+            var pro = from p in context.Products
+                      join c in context.Categories
+                      on p.CategoryId equals c.CategoryId
+                      select new ProductViewModelDemo()
+                      {
+                          Buying_Price = p.Buying_Price,
+                          CategoryId = p.CategoryId,
+                          Description = p.Description,
+                          CategoryName = c.CategoryName,
+                          Picture = p.Picture,
+                          ProductId = p.ProductId,
+                          ProductName = p.ProductName,
+                          Quantity = p.Quantity,
+                          Selling_Price = p.Selling_Price
+                      };
+
+
+            return pro.ToList();
+        }
+
+        public ProductViewModelDemo GetProductByProdIdLinq(int id)
+        {
+            var pro = from p in context.Products
+                      join c in context.Categories
+                      on p.CategoryId equals c.CategoryId
+                      select new ProductViewModelDemo()
+                      {
+                          Buying_Price = p.Buying_Price,
+                          CategoryId = p.CategoryId,
+                          Description = p.Description,
+                          CategoryName = c.CategoryName,
+                          Picture = p.Picture,
+                          ProductId = p.ProductId,
+                          ProductName = p.ProductName,
+                          Quantity = p.Quantity,
+                          Selling_Price = p.Selling_Price
+                      };
+
+
+            return pro.Where(p => p.ProductId == id).FirstOrDefault();
+        }
+        public List<ProductViewModelDemo> GetProductByPriceLinq(int top)
+        {
+            var pro = from p in context.Products
+                      join c in context.Categories
+                      on p.CategoryId equals c.CategoryId
+                      select new ProductViewModelDemo()
+                      {
+                          Buying_Price = p.Buying_Price,
+                          CategoryId = p.CategoryId,
+                          Description = p.Description,
+                          CategoryName = c.CategoryName,
+                          Picture = p.Picture,
+                          ProductId = p.ProductId,
+                          ProductName = p.ProductName,
+                          Quantity = p.Quantity,
+                          Selling_Price = p.Selling_Price
+                      };
+
+
+            return pro.OrderByDescending(j => j.Selling_Price).Take(top).ToList();
+        }
+
+
     }
 }
