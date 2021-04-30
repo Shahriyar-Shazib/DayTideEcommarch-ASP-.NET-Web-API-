@@ -97,8 +97,6 @@ E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Deb
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Cors.dll
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Http.Cors.dll
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\System.Web.Http.Cors.xml
-E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.initial.resources
-E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.GenerateResource.cache
 G:\New System try\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\DayTideWebApi.dll.config
 G:\New System try\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\DayTideWebApi.dll
 G:\New System try\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\bin\DayTideWebApi.pdb
@@ -205,3 +203,5 @@ G:\ASP.NET FINAL Project(FINAL)\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi
 G:\ASP.NET FINAL Project(FINAL)\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.pdb
 G:\ASP.NET FINAL Project(FINAL)\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.InitialDb.resources
 G:\ASP.NET FINAL Project(FINAL)\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.GenerateResource.cache
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.initial.resources
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.GenerateResource.cache

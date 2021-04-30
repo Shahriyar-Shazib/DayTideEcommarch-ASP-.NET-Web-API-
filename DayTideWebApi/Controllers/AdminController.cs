@@ -232,19 +232,19 @@ namespace DayTideWebApi.Controllers
             return View(delmanRepository.GetUserById(id));
 
         }*/
-        /*
-        [HttpGet]
-        public ActionResult Notifyad(string id)
+        
+        [Route("Notify"),HttpGet]
+        public IHttpActionResult Notify(string userid ,string id)
         {
             Notice notice = new Notice();
-            notice.Send_For = id;
-            notice.Send_by = Session["UserId"].ToString();
-            ViewBag.ids = notice;
-            return View("Notify");
+            notice.Send_For = userid;
+            notice.Send_by = id;
+           
+            return Ok(notice);
 
-        }*/
+        }
 
-        [Route("Notifyad"),HttpPost]
+        [Route("Notify"),HttpPost]
         public IHttpActionResult Notifyad(Notice notice)
         {
             notice.Status = "Unread";
@@ -252,61 +252,8 @@ namespace DayTideWebApi.Controllers
             return Created("abc",notice);
 
         }
-        /*
-        [HttpGet]
-        public ActionResult Notifymod(string id)
-        {
-            Notice notice = new Notice();
-            notice.Send_For = id;
-            notice.Send_by = Session["UserId"].ToString();
-            ViewBag.ids = notice;
-            return View("Notify");
-
-        }*/
-          [Route("Notifymod"),HttpPost]
-        public IHttpActionResult Notifymod(Notice notice)
-        {
-            notice.Status = "Unread";
-            noticeRepository.Insert(notice);
-            return Created("abc",notice);
-
-        }/*
-        [HttpGet]
-        public ActionResult Notifydelman(string id)
-        {
-            Notice notice = new Notice();
-            notice.Send_For = id;
-            notice.Send_by = Session["UserId"].ToString();
-            ViewBag.ids = notice;
-            return View("Notify");
-
-        }*/
-         [Route("Notifydelman"),HttpPost]
-        public IHttpActionResult Notifydelman(Notice notice)
-        {
-            notice.Status = "Unread";
-            noticeRepository.Insert(notice);
-            return Created("abc",notice);
-
-        }/*s
-        [HttpGet]
-        public ActionResult Notifycus(string id)
-        {
-            Notice notice = new Notice();
-            notice.Send_For = id;
-            notice.Send_by = Session["UserId"].ToString();
-            ViewBag.ids = notice;
-            return View("Notify");
-
-        }*/
-         [Route("Notifycus"),HttpPost]
-        public IHttpActionResult Notifycus(Notice notice)
-        {
-            notice.Status = "Unread";
-            noticeRepository.Insert(notice);
-            return Created("abc",notice);
-
-        }
+       
+        
         
         [Route("DetailCus"),HttpGet]
         public IHttpActionResult Detailscus(string id)
