@@ -7,13 +7,13 @@ namespace DayTideWebApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class addlinksmod : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addlinksmod));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "202105010649593_addlinks mod"; }
+            get { return "202105011620508_initial"; }
         }
         
         string IMigrationMetadata.Source

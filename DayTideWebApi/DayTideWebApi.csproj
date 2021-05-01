@@ -109,13 +109,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202105010612534_initial.cs" />
-    <Compile Include="Migrations\202105010612534_initial.designer.cs">
-      <DependentUpon>202105010612534_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202105010649593_addlinks mod.cs" />
-    <Compile Include="Migrations\202105010649593_addlinks mod.designer.cs">
-      <DependentUpon>202105010649593_addlinks mod.cs</DependentUpon>
+    <Compile Include="Migrations\202105011620508_initial.cs" />
+    <Compile Include="Migrations\202105011620508_initial.designer.cs">
+      <DependentUpon>202105011620508_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -124,6 +120,7 @@
     <Compile Include="Models\CartBackup.cs" />
     <Compile Include="Models\CartViewModelDemo.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\ComplexDelivery_Man_Rating.cs" />
     <Compile Include="Models\ComplexDelMan.cs" />
     <Compile Include="Models\ComplexCustomer.cs" />
     <Compile Include="Models\ComplexModerator.cs" />
@@ -181,11 +178,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202105010612534_initial.resx">
-      <DependentUpon>202105010612534_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202105010649593_addlinks mod.resx">
-      <DependentUpon>202105010649593_addlinks mod.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202105011620508_initial.resx">
+      <DependentUpon>202105011620508_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

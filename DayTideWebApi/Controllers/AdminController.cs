@@ -51,6 +51,23 @@ namespace DayTideWebApi.Controllers
             }
            
         }
+        [Route("AddAdmin"),HttpPost]
+        public IHttpActionResult AddAdmin(Admin admin)
+        {
+            if (userRepository.GetUserById(admin.AdminId) == null)
+            {
+                User usr = new User();
+                usr.UserId = admin.AdminId;
+                usr.Password = "1";
+                usr.Type = "Admin";
+                usr.Status = "valid";
+                userRepository.Insert(usr);
+                adminRepository.Insert(admin);
+                return GetAdminList();
+            }
+            else return StatusCode(HttpStatusCode.NotAcceptable);
+
+        }
         [Route("CustomerList")]
         public IHttpActionResult GetCustomerList()
         {
@@ -104,6 +121,22 @@ namespace DayTideWebApi.Controllers
             }
            
         }
+        [Route("AddModerator"),HttpPost]
+        public IHttpActionResult AddModerator(Moderator moderator)
+        {
+            if (userRepository.GetUserById(moderator.ModeratorId) == null)
+            {
+                User usr = new User();
+                usr.UserId = moderator.ModeratorId;
+                usr.Password = "1";
+                usr.Type = "Moderator";
+                usr.Status = "valid";
+                userRepository.Insert(usr);
+                moderatorRepository.Insert(moderator);
+                return ModeratorList();
+            }
+            else return StatusCode(HttpStatusCode.NotAcceptable);
+        }
         [Route("DetailModerator"),HttpGet]
         public IHttpActionResult DetailModerator(string id)
         {
@@ -132,7 +165,7 @@ namespace DayTideWebApi.Controllers
             return ModeratorList();
 
         }
-        [Route("Deletemod"),HttpGet]
+        [Route("Deletemod"),HttpDelete]
         public IHttpActionResult Deletemod(string id)
         {
             moderatorRepository.DeleteUser(id);
@@ -183,6 +216,35 @@ namespace DayTideWebApi.Controllers
 
             //return Ok(delmanRepository.GetAll());
         }
+        [Route("AddDelMan"),HttpPost]
+        public IHttpActionResult AddDelMan(DeliveryMan delman)
+        {
+            if (userRepository.GetUserById(delman.DelManId) == null)
+            {
+                User usr = new User();
+                usr.UserId = delman.DelManId;
+                usr.Password = "1";
+                usr.Type = "Delivery Man";
+                usr.Status = "valid";
+                userRepository.Insert(usr);
+                delmanRepository.Insert(delman);
+                return DeleveryManList();
+            }
+            else return StatusCode(HttpStatusCode.NotAcceptable);
+
+        }
+        [Route("DetailDelman"),HttpGet]
+        public IHttpActionResult DetailDelman(string id)
+        {
+            DeliveryMan deliveryMan = delmanRepository.GetUserById(id);
+            if (deliveryMan == null)
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            else return Ok(deliveryMan);
+           
+
+        }
         [Route("Blockdel"),HttpGet]
         public IHttpActionResult Blockdel(string id)
         {
@@ -203,6 +265,20 @@ namespace DayTideWebApi.Controllers
             return DeleveryManList();
 
         }
+        [Route("Deletedelman"),HttpDelete]
+        public IHttpActionResult Deletedelman(string id)
+        {
+            DeliveryMan delman=delmanRepository.GetUserById(id);
+            if (delman.In_Service == 0)
+            {
+                //order_detailRepo.DeleteorderbyDelmanID(id)
+                delmanRepository.DeleteUser(id);
+                userRepository.DeleteUser(id);
+                return DeleveryManList();
+            }
+            else return StatusCode(HttpStatusCode.NotAcceptable);
+           
+        }
         [Route("updatesalDeletedelman"),HttpGet]
         public IHttpActionResult updatesalDeletedelman(string id)
         {
@@ -221,27 +297,7 @@ namespace DayTideWebApi.Controllers
             return DeleveryManList();
         }
 
-       /* [HttpGet]
-        public ActionResult DetailDelman(string id)
-        {
-            List<Delevary_Man_Rating> delmanratinhg = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id);
-            ViewBag.comments = delmanratinhg;
-            int count = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id).Count;
-            int ratingCount = 0;
-            if (count != 0)
-            {
-                foreach (var v in delmanratinhg)
-                {
-                    ratingCount = ratingCount + Convert.ToInt32(v.Rating);
-                }
-                float finalrating = (ratingCount / count);
-                ViewBag.Rating = Math.Ceiling(finalrating);
-            }
-            else
-                ViewBag.Rating = 0;
-            return View(delmanRepository.GetUserById(id));
-
-        }*/
+      
         
         [Route("Notify"),HttpGet]
         public IHttpActionResult Notify(string userid ,string id)
@@ -480,23 +536,7 @@ namespace DayTideWebApi.Controllers
          {
              return View();
          }
-         [HttpPost]
-         public ActionResult AddModerator(Moderator moderator)
-         {
-             if (userRepository.GetUserById(moderator.ModeratorId) == null)
-             {
-                 User usr = new User();
-                 usr.UserId = moderator.ModeratorId;
-                 usr.Password = "1";
-                 usr.Type = "Moderator";
-                 usr.Status = "valid";
-                 userRepository.Insert(usr);
-                 moderatorRepository.Insert(moderator);
-                 return RedirectToAction("ModeratorList", "Admin");
-             }
-             else ViewBag.errmsg = "Invalid UserID";
-             return View(moderator);
-         }
+         
          [HttpGet]
          public ActionResult AddDelMan()
          {
@@ -527,24 +567,7 @@ namespace DayTideWebApi.Controllers
              userRepository.Update(user);
              return RedirectToAction("DelManReq", "Admin");
          }
-         [HttpPost]
-         public ActionResult AddDelMan(DeleveryMan delman)
-         {
-             if (userRepository.GetUserById(delman.DelManId) == null)
-             {
-                 User usr = new User();
-                 usr.UserId = delman.DelManId;
-                 usr.Password = "1";
-                 usr.Type = "Delivery Man";
-                 usr.Status = "valid";
-                 userRepository.Insert(usr);
-                 delmanRepository.Insert(delman);
-                 return RedirectToAction("DeleveryManList", "Admin");
-             }
-             else ViewBag.errmsg = "Invalid UserID";
-             return View(delman);
-
-         }
+         
          [HttpGet]
          public ActionResult EditBio(string id)
          {
