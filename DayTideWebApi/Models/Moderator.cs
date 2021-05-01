@@ -23,6 +23,11 @@ namespace DayTideWebApi.Models
         [Required]
         public double Salary { get; set; }
         public string Picture { get; set; }
-
+    /* [NotMapped]
+        public Link links
+        {
+            get { return links; }
+        }
+     */
     }
 }

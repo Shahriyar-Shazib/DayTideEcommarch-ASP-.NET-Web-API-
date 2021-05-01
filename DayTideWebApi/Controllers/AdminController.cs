@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web;
 
 namespace DayTideWebApi.Controllers
 {
@@ -106,6 +107,9 @@ namespace DayTideWebApi.Controllers
         [Route("DetailModerator"),HttpGet]
         public IHttpActionResult DetailModerator(string id)
         {
+           //Moderator mod = moderatorRepository.GetUserById(id);
+            //mod.links=(new Link() { Url= "http://localhost:2293//api/Admin/DetailModerator?id=a-1", Method="GET",Relation="BlockModerator"});
+            //HttpContext.Current.Request.Url.AbsoluteUri
             return Ok(moderatorRepository.GetUserById(id));
 
         }
@@ -128,7 +132,13 @@ namespace DayTideWebApi.Controllers
             return ModeratorList();
 
         }
-
+        [Route("Deletemod"),HttpGet]
+        public IHttpActionResult Deletemod(string id)
+        {
+            moderatorRepository.DeleteUser(id);
+            userRepository.DeleteUser(id);
+            return ModeratorList();
+        }
         [Route("updatesalmod"),HttpGet]
         public IHttpActionResult updatesalmod(string id)
         {
@@ -452,13 +462,7 @@ namespace DayTideWebApi.Controllers
              return View(admin);
 
          }
-         [HttpGet]
-         public ActionResult Deletemod(string id)
-         {
-             moderatorRepository.DeleteUser(id);
-             userRepository.DeleteUser(id);
-             return RedirectToAction("ModeratorList", "Admin");
-         }
+       
          [HttpGet]
          public ActionResult Deletedelman(string id)
          {

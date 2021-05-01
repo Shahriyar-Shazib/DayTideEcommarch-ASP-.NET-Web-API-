@@ -131,7 +131,7 @@
                         In_Service = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.DelManId)
-                .ForeignKey("dbo.Users", t => t.DelManId)
+                .ForeignKey("dbo.Users", t => t.DelManId, cascadeDelete: true)
                 .Index(t => t.DelManId);
             
             CreateTable(
@@ -147,7 +147,7 @@
                         Picture = c.String(),
                     })
                 .PrimaryKey(t => t.ModeratorId)
-                .ForeignKey("dbo.Users", t => t.ModeratorId)
+                .ForeignKey("dbo.Users", t => t.ModeratorId ,cascadeDelete: true)
                 .Index(t => t.ModeratorId);
             
             CreateTable(

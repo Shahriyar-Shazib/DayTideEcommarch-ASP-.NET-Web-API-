@@ -113,6 +113,10 @@
     <Compile Include="Migrations\202105010612534_initial.designer.cs">
       <DependentUpon>202105010612534_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105010649593_addlinks mod.cs" />
+    <Compile Include="Migrations\202105010649593_addlinks mod.designer.cs">
+      <DependentUpon>202105010649593_addlinks mod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
     <Compile Include="Models\Application.cs" />
@@ -179,6 +183,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202105010612534_initial.resx">
       <DependentUpon>202105010612534_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105010649593_addlinks mod.resx">
+      <DependentUpon>202105010649593_addlinks mod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

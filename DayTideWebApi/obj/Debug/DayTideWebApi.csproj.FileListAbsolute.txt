@@ -205,3 +205,4 @@ G:\ASP.NET FINAL Project(FINAL)\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi
 G:\ASP.NET FINAL Project(FINAL)\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.GenerateResource.cache
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.initial.resources
 E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.csproj.GenerateResource.cache
+E:\.net\DayTide Web Api\DayTideEcommarch-ASP-.NET-Web-API-\DayTideWebApi\obj\Debug\DayTideWebApi.Migrations.addlinksmod.resources
