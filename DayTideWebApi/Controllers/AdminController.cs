@@ -297,8 +297,54 @@ namespace DayTideWebApi.Controllers
             return DeleveryManList();
         }
 
-      
-        
+        [Route("DelManReq"),HttpGet]
+        public IHttpActionResult DelManReq()
+        {
+            using (DayTideAPIContext db = new DayTideAPIContext())
+            {
+                List<DeliveryMan> deliveryMen = db.DeliveryMen.ToList();
+                List<User> user = db.Users.ToList();
+
+                var ComplexDelMan = from u in user
+                                    join a in deliveryMen on u.UserId equals a.DelManId into table1
+                                    from a in table1.ToList()
+                                    select new ComplexDelMan
+                                    {
+                                        user = u,
+                                        deliveryMan = a
+                                    };
+                if (!ComplexDelMan.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+
+                // return View(request);
+                return Ok(ComplexDelMan);
+            }
+
+        }
+        [Route("DeleteDelSignup"),HttpDelete]
+
+        public IHttpActionResult DeleteDelSignup(string id)
+        {
+            delmanRepository.DeleteUser(id);
+            userRepository.DeleteUser(id);
+            return DelManReq();
+        }
+        [Route("EditDelSignup"),HttpGet]
+        public IHttpActionResult EditDelSignup(string id)
+        {
+            return Ok(delmanRepository.GetUserById(id));
+        }
+        [Route("EditDelSignup"),HttpPut]
+        public IHttpActionResult EditDelSignup( DeliveryMan delman)
+        {
+            User user = userRepository.GetUserById(delman.DelManId);
+            user.Status = "valid";
+            delmanRepository.Update(delman);
+            userRepository.Update(user);
+            return DelManReq();
+        }
         [Route("Notify"),HttpGet]
         public IHttpActionResult Notify(string userid ,string id)
         {
@@ -542,31 +588,8 @@ namespace DayTideWebApi.Controllers
          {
              return View();
          }
-         [HttpGet]
-         public ActionResult DelManReq()
-         {
-             return View(userRepository.GetUserSignUpReq());
-         }
-         [HttpGet]
-         public ActionResult DeleteDelSignup(string id)
-         {
-             delmanRepository.DeleteUser(id);
-             userRepository.DeleteUser(id);
-             return RedirectToAction("DelManReq", "Admin");
-         }
-         [HttpGet]
-         public ActionResult EditDelSignup(string id)
-         {
-             return View(delmanRepository.GetUserById(id));
-         }
-         [HttpPost]
-         public ActionResult EditDelSignup(User user, DeleveryMan delman)
-         {
-             user.Status = "valid";
-             delmanRepository.Update(delman);
-             userRepository.Update(user);
-             return RedirectToAction("DelManReq", "Admin");
-         }
+        
+        
          
          [HttpGet]
          public ActionResult EditBio(string id)

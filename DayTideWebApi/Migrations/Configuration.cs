@@ -36,8 +36,8 @@
                  new User(){UserId= "arefin101",Password="1234",Type="Moderator",Status="valid"},
                  new User(){UserId= "joy101",Password="1",Type="customer",Status="valid"},
                  new User(){UserId= "joy102",Password="1",Type="customer",Status="valid"},
-                 new User(){UserId= "pantho101",Password="1",Type="DeliveryMan",Status="valid"},
-                 new User(){UserId= "pantho102",Password="1",Type="DeliveryMan",Status="valid"},
+                 new User(){UserId= "pantho101",Password="1",Type="DeliveryMan",Status="Processing"},
+                 new User(){UserId= "pantho102",Password="1",Type="DeliveryMan",Status="Processing"},
             };
             if (!context.Users.Any())
             {
