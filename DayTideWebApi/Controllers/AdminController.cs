@@ -264,7 +264,31 @@ namespace DayTideWebApi.Controllers
         [Route("OrderDetailcus"),HttpGet]
         public IHttpActionResult OrderDetailcus(string id)
         {
-            return Ok(order_detailRepo.GetOrderDetailByUsertId(id));
+            using (DayTideAPIContext db = new DayTideAPIContext())
+            {
+                List<Order_Detail> order_Detail = db.Order_Details.ToList();
+                List<DeliveryMan> deliveryMen = db.DeliveryMen.ToList();
+                List<Customer> customer = db.Customers.ToList();
+
+                var ComplexOrderDetail = from o in order_Detail
+                                         join a in deliveryMen on o.DelManId equals a.DelManId into table1
+                                         from a in table1.ToList()
+                                         join p in customer on o.CustomerId equals p.CustomerId into table2
+                                         from p in table2.ToList()
+                                         select new
+                                         {
+                                             customer = p,
+                                             order_Detail = o,
+                                             deliveryMan = a
+                                         };
+                if (!ComplexOrderDetail.Any())
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+
+                // return View(request);
+                return Ok(ComplexOrderDetail);
+            }
         }
         
         [Route("viewApplication"),HttpGet]

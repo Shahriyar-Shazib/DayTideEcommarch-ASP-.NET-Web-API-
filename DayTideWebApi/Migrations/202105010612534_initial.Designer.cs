@@ -13,7 +13,7 @@ namespace DayTideWebApi.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202104301055291_initial"; }
+            get { return "202105010612534_initial"; }
         }
         
         string IMigrationMetadata.Source

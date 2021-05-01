@@ -109,9 +109,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202104301055291_initial.cs" />
-    <Compile Include="Migrations\202104301055291_initial.designer.cs">
-      <DependentUpon>202104301055291_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202105010612534_initial.cs" />
+    <Compile Include="Migrations\202105010612534_initial.designer.cs">
+      <DependentUpon>202105010612534_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
@@ -124,6 +124,7 @@
     <Compile Include="Models\ComplexCustomer.cs" />
     <Compile Include="Models\ComplexModerator.cs" />
     <Compile Include="Models\ComplexAdmin.cs" />
+    <Compile Include="Models\ComplexOrderDetail.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\CustomerViewModelDemo.cs" />
     <Compile Include="Models\DayTideAPIContext.cs" />
@@ -176,8 +177,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202104301055291_initial.resx">
-      <DependentUpon>202104301055291_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202105010612534_initial.resx">
+      <DependentUpon>202105010612534_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
