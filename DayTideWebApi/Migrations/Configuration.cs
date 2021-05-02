@@ -79,7 +79,7 @@
             }
             List<Moderator> moderators = new List<Moderator>()
             {
-                new Moderator(){ModeratorId= "a-1",Name="arifin",Email="arifin@gmail.com",Phone="01956424568",Address="chittigong",Salary=10000,Picture=""},
+                new Moderator(){ModeratorId= "a-1",Name="arifin",Email="arifin@gmail.com",Phone="01956424568",Address="chittagong",Salary=10000,Picture=""},
                 new Moderator(){ModeratorId= "a-12",Name="samsul",Email="samsul@gmail.com",Phone="01956424568",Address="mymensing",Salary=5000,Picture=""},
                 new Moderator(){ModeratorId= "arefin101",Name="Arefin Khan",Email="arefink910@gmail.com",Phone="01829747029",Address="Tejgaon Dhaka-1208",Salary=50000,Picture="me.jpg"},
 
@@ -94,10 +94,10 @@
             }
             List<DeliveryMan> deleveryMen = new List<DeliveryMan>()
             {
-                new DeliveryMan(){DelManId= "p-1",Name="pantho",Email="pantho@gmail.com",Phone="01956424568",Address="chittigong",Salary=10000,Complete_Task=0,Picture=""},
+                new DeliveryMan(){DelManId= "p-1",Name="pantho",Email="pantho@gmail.com",Phone="01956424568",Address="chittagong",Salary=10000,Complete_Task=0,Picture=""},
                 new DeliveryMan(){DelManId= "p-12",Name="hafiz",Email="hafiz@gmail.com",Phone="01956424568",Address="mymensing",Salary=5000,Complete_Task=0,Picture=""},
                 new DeliveryMan(){DelManId= "pantho101",Name="pantho1",Email="pantho1@gmail.com",Phone="01956424568",Address="Dhaka",Salary=10000,Complete_Task=0,Picture=""},
-                new DeliveryMan(){DelManId= "pantho102",Name="pantho2",Email="pantho2@gmail.com",Phone="01956424568",Address="Chittigong",Salary=10000,Complete_Task=0,Picture=""},
+                new DeliveryMan(){DelManId= "pantho102",Name="pantho2",Email="pantho2@gmail.com",Phone="01956424568",Address="Chittagong",Salary=10000,Complete_Task=0,Picture=""},
 
             };
             if (!context.DeliveryMen.Any())

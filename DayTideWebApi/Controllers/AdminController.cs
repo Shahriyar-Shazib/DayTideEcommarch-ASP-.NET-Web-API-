@@ -406,7 +406,12 @@ namespace DayTideWebApi.Controllers
         [Route("viewApplication"),HttpGet]
         public IHttpActionResult viewApplication()
         {
-            return Ok(applicationRepository.GetAll());
+            List<Application> app = applicationRepository.GetAll();
+            if(!app.Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(app);
         }
         
         [Route("applicationReject"),HttpPut]
@@ -494,18 +499,29 @@ namespace DayTideWebApi.Controllers
             }
              return Ok(orderreqRepo.GetAll());
         }
-         [HttpGet]
-        /* public ActionResult Editdelreq(int id)
+         [Route("Editdelreq"),HttpGet]
+         public IHttpActionResult Editdelreq(int id)
          {
              OrderRequest ordrreq = new OrderRequest();
              ordrreq = orderreqRepo.GetOrderRequestById(id);
 
-             ViewBag.delman = delmanRepository.GetDeleveryMenByAdd(ordrreq.District);
+             //ViewBag.delman = delmanRepository.GetDeleveryMenByAdd(ordrreq.District);
 
-             return View(orderreqRepo.GetOrderRequestById(id));
+             return Ok(orderreqRepo.GetOrderRequestById(id));
         }
-         [HttpPost]
-         public ActionResult Editdelreq(OrderRequest orderreq, string DelManId)
+        [Route("Finddelmanonadd"), HttpGet]
+        public IHttpActionResult Finddelmanonadd(string add)
+        {
+            List<DeliveryMan> delman = delmanRepository.GetDeleveryMenByAdd(add);
+           if(!delman.Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+
+            return Ok(delman);
+        }
+        [Route("Editdelreq"),HttpPost]
+         public IHttpActionResult Editdelreq(OrderRequest orderreq, string DelManId)
          {
              Order_Detail order_detail = new Order_Detail();
              order_detail.OrderId = orderreq.OrderId;
@@ -517,13 +533,17 @@ namespace DayTideWebApi.Controllers
              order_detail.CustomerId = orderreq.CustomerId;
              order_detail.Status = "Processing";
              order_detail.DelManId = DelManId;
-             OrderRequest ordrreq = new OrderRequest();
+            DeliveryMan deliveryMan = delmanRepository.GetUserById(DelManId);
+            deliveryMan.In_Service=deliveryMan.In_Service+1;
+            delmanRepository.Update(deliveryMan);
+
+             //OrderRequest ordrreq = new OrderRequest();
              order_detailRepo.Insert(order_detail);
              orderreqRepo.Delete(orderreq.OrderId);
 
-             return RedirectToAction("OrderHistory", "Admin");
-         }*/
-         [Route("Deletedelreq"),HttpDelete]
+             return OrderHistory();
+        }/**/
+        [Route("Deletedelreq"),HttpDelete]
          public IHttpActionResult Deletedelreq(int id)
          {
 
@@ -540,31 +560,6 @@ namespace DayTideWebApi.Controllers
         }/*
        
         
-        
-         [HttpGet]
-         public ActionResult AddAdmin()
-         {
-             return View();
-         }
-         [HttpPost]
-         public ActionResult AddAdmin(Admin admin)
-         {
-             if (userRepository.GetUserById(admin.AdminId) == null)
-             {
-                 User usr = new User();
-                 usr.UserId = admin.AdminId;
-                 usr.Password = "1";
-                 usr.Type = "Admin";
-                 usr.Status = "valid";
-                 userRepository.Insert(usr);
-                 adminRepository.Insert(admin);
-                 return RedirectToAction("AdminList", "Admin");
-             }
-             else ViewBag.errmsg = "Invalid USerID";
-             return View(admin);
-
-         }
-       
          [HttpGet]
          public ActionResult Deletedelman(string id)
          {
