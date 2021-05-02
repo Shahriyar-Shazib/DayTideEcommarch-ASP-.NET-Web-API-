@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web;
+using DayTideWebApi.Attributes;
 
 namespace DayTideWebApi.Controllers
 {
@@ -25,7 +26,7 @@ namespace DayTideWebApi.Controllers
         OrderRequestRepository orderreqRepo = new OrderRequestRepository();
         ProductRepository productRepository = new ProductRepository();
         User usr = new User();
-        [Route("Adminlist")]
+        [Route("Adminlist")/*, AdminAuthenticationAttribute*/]
         public IHttpActionResult GetAdminList()
         {
             using (DayTideAPIContext db = new  DayTideAPIContext())
@@ -414,7 +415,7 @@ namespace DayTideWebApi.Controllers
             return Ok(app);
         }
         
-        [Route("applicationReject"),HttpPut]
+        [Route("applicationReject"), HttpGet]
         public IHttpActionResult applicationReject(int id,string userid)
         {
             Application app = applicationRepository.GetApplicationById(id);
@@ -430,7 +431,7 @@ namespace DayTideWebApi.Controllers
             return viewApplication(); ;
 
         }
-        [Route("applicationAccept"), HttpPut]
+        [Route("applicationAccept"), HttpGet]
         public IHttpActionResult applicationAccept(int id,string userid)
         {
             Application app = applicationRepository.GetApplicationById(id);
@@ -477,7 +478,7 @@ namespace DayTideWebApi.Controllers
             noticeRepository.Update(notice);
             return Ok(notice);
         }
-        [Route("DeleteNotice"),HttpDelete]
+        [Route("DeleteNotice"),HttpGet]
          public IHttpActionResult DeleteNotice(int id)
          {
              noticeRepository.Delete(id);
@@ -487,7 +488,12 @@ namespace DayTideWebApi.Controllers
          [Route("PostedNotification"), HttpGet]
          public IHttpActionResult PostedNotification(string id)
          {
-             return Ok(noticeRepository.GetNoticeByIdSend_by(id));
+            List<Notice> notice = noticeRepository.GetNoticeByIdSend_by(id);
+            if (!notice.Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+             return Ok(notice);
          }
         
          [Route("OrderRequest"),HttpGet]
