@@ -104,6 +104,7 @@
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DeliveryManController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ModeratorController.cs" />
@@ -111,12 +112,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202105011620508_initial.cs" />
-    <Compile Include="Migrations\202105011620508_initial.designer.cs">
-      <DependentUpon>202105011620508_initial.cs</DependentUpon>
+    <Compile Include="Migrations\202105031413240_InitialDb.cs" />
+    <Compile Include="Migrations\202105031413240_InitialDb.designer.cs">
+      <DependentUpon>202105031413240_InitialDb.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Admin.cs" />
+    <Compile Include="Models\AllProduct.cs" />
     <Compile Include="Models\Application.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartBackup.cs" />
@@ -133,6 +135,8 @@
     <Compile Include="Models\DayTideAPIContext.cs" />
     <Compile Include="Models\Delivery_Man_Rating.cs" />
     <Compile Include="Models\DeliveryMan.cs" />
+    <Compile Include="Models\DelManWithValidity.cs" />
+    <Compile Include="Models\HomePage.cs" />
     <Compile Include="Models\keyAttribute.cs" />
     <Compile Include="Models\Link.cs" />
     <Compile Include="Models\Moderator.cs" />
@@ -180,8 +184,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202105011620508_initial.resx">
-      <DependentUpon>202105011620508_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202105031413240_InitialDb.resx">
+      <DependentUpon>202105031413240_InitialDb.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

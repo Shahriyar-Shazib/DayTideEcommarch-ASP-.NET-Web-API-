@@ -12,6 +12,10 @@ namespace DayTideWebApi.Repositories
         {
             return this.context.Order_Details.Where(x => x.CustomerId == id).ToList();
         }
-        
+        public Order_Detail GetOrderDetailByOrderId(int id)
+        {
+            return context.Order_Details.Find(id);
+        }
+
     }
 }

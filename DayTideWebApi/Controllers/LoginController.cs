@@ -14,7 +14,7 @@ namespace DayTideWebApi.Controllers
     {
         UserRepository userRepo = new UserRepository();
         [Route("login"), HttpGet]
-        public IHttpActionResult UnBlockmod(string id,string pass)
+        public IHttpActionResult login(string id,string pass)
         {
             User usr = userRepo.GetUserById(id);
             if (usr == null)

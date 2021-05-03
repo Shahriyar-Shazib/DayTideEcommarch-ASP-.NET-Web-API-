@@ -27,6 +27,44 @@ namespace DayTideWebApi.Controllers
 
         ////////////////////////Moderator///////////////////////
 
+
+        [Route("Home"), HttpGet]
+        public IHttpActionResult Home()
+        {
+
+            HomePage homePage = new HomePage();
+
+            double sum = 0;
+            var orderDetails = Order_DetailRepository.GetAll().Where(x => x.Status == "Done").ToList();
+            foreach (var item in orderDetails)
+            {
+                sum += item.Amount;
+            }
+
+            homePage.totalEarning = (int)sum;
+
+            homePage.totalEmp = deliveryManRepository.GetAll().Count();
+            var employeeAvailable = deliveryManRepository.GetAll().Where(x => x.In_Service == 0).Count();
+            int TotalRequest = cartBackupRepository.GetAll().GroupBy(x => x.OrderId).Select(g => g.First()).Where(y => y.Price != 0).ToList().Count;
+            int TotalDone = cartBackupRepository.GetAll().Where(x => x.Quantiry == -1 && x.Price != 0).ToList().Count;
+            if (TotalRequest == 0)
+            {
+                homePage.pendingRatio = 0;
+            }
+            else
+            {
+                homePage.task= (TotalDone * 100) / TotalRequest;
+                homePage.pendingRatio = 100-((TotalDone * 100) / TotalRequest);
+            }
+            //ViewData["pendingRequest"] = cartBackupRepository.GetAll().GroupBy(x => x.OrderId).Select(g => g.First()).Where(x => x.Quantiry > -1).Count();
+            homePage.pendingRequest = cartBackupRepository.GetAll().GroupBy(x => x.OrderId).Select(g => g.First()).Where(x => x.Quantiry != -1).Count();
+            //homePage.task = TotalDone;
+            homePage.empAvailable = (employeeAvailable * 100) / homePage.pendingRequest;
+            return Ok(homePage);
+        }
+
+
+
         [Route("{UserId}"), HttpGet]
         public IHttpActionResult GetModerator(string UserId)
         {
@@ -50,12 +88,26 @@ namespace DayTideWebApi.Controllers
         [Route("GetAllDeliveryMan"), HttpGet]
         public IHttpActionResult GetAllDeliveryMan()
         {
-            var deliveryMans = deliveryManRepository.GetAll();
-            if (deliveryMans == null)
+            using (DayTideAPIContext db = new DayTideAPIContext())
             {
-                return StatusCode(HttpStatusCode.NoContent);
+                List<DeliveryMan> deliveryMen = db.DeliveryMen.ToList();
+                List<User> users = db.Users.ToList();
+
+                var DeliveryMan = from u in users
+                                  join d in deliveryMen on u.UserId equals d.DelManId into table1
+                                  from d in table1.GroupBy(x => x.DelManId).Select(g => g.First()).ToList()
+                                  select new DelManWithValidity
+                                  {
+                                      deliveryMan = d,
+                                      user = u
+
+                                  };
+                if (DeliveryMan == null)
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                return Ok(DeliveryMan);
             }
-            return Ok(deliveryMans);
         }
         [Route("CreateDeliveryMan"), HttpPost]
         public IHttpActionResult CreateDeliveryMan(DeliveryMan deliveryMan)
@@ -138,7 +190,7 @@ namespace DayTideWebApi.Controllers
             }
             return Ok(categories);
         }
-        [Route("CreateCategory"), HttpPost]
+        [Route("AddCategory"), HttpPost]
         public IHttpActionResult CreateCategory(Category category)
         {
             if (ModelState.IsValid)
@@ -178,14 +230,28 @@ namespace DayTideWebApi.Controllers
         [Route("GetAllProduct"), HttpGet]
         public IHttpActionResult GetAllProduct()
         {
-            var products = productRepository.GetAll();
-            if (products == null)
+            using (DayTideAPIContext db = new DayTideAPIContext())
             {
-                return StatusCode(HttpStatusCode.NoContent);
+                List<Category> categories = db.Categories.ToList();
+                List<Product> products = db.Products.ToList();
+
+                var AllProduct = from c in categories
+                                  join p in products on c.CategoryId equals p.CategoryId into table1
+                                  from p in table1.GroupBy(x => x.ProductId).Select(g => g.First()).ToList()
+                                  select new AllProduct
+                                  {
+                                      category = c,
+                                      product = p
+
+                                  };
+                if (AllProduct == null)
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                return Ok(AllProduct);
             }
-            return Ok(products);
         }
-        [Route("CreateProduct"), HttpPost]
+        [Route("AddProduct"), HttpPost]
         public IHttpActionResult CreateProduct(Product product)
         {
             if (ModelState.IsValid)
@@ -244,7 +310,7 @@ namespace DayTideWebApi.Controllers
 
         ////////////////////////////////Customer Reuests///////////////////////////////
 
-        [Route("CheckRequest/{OrderId}"), HttpGet]
+        [Route("OrderDetail/{OrderId}"), HttpGet]
         public IHttpActionResult CheckRequest(int OrderId)
         {
             using (DayTideAPIContext db1 = new DayTideAPIContext())
@@ -271,7 +337,7 @@ namespace DayTideWebApi.Controllers
                 return Ok(Requests);
             }
         }
-        [Route("OrderDetail"), HttpGet]
+        [Route("CheckOrder"), HttpGet]
         public IHttpActionResult OrderDetail()
         {
             using (DayTideAPIContext db = new DayTideAPIContext())

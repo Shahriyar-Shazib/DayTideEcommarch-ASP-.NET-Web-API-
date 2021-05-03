@@ -18,7 +18,7 @@ namespace DayTideWebApi.Controllers
         DayTideAPIContext context = new DayTideAPIContext();
 
 
-        [Route("Products"),HttpGet, TestAuthentication]
+        [Route("Products"),HttpGet]
         //TestAuthentication
         public IHttpActionResult AllProducts()
         {
