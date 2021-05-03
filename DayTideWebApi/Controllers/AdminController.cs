@@ -52,6 +52,50 @@ namespace DayTideWebApi.Controllers
             }
            
         }
+
+        [Route("Adprofile"),HttpGet]
+        public IHttpActionResult Adprofile(string id)
+        {
+            return Ok(adminRepository.GetUserById(id));
+        }
+
+
+
+
+        [Route("EditBio"), HttpGet]
+        public IHttpActionResult EditBio(string id)
+        {
+            return Ok(adminRepository.GetUserById(id));
+        }
+
+        /*[HttpPost]
+        public ActionResult EditBio(Admin admin, HttpPostedFileBase Picture)
+        {
+            if (Picture == null)
+            {
+                Session["Name"] = admin.Name;
+                adminRepository.Update(admin);
+                return RedirectToAction("Adprofile", "Admin");
+            }
+            else if (Picture != null)
+            {
+                string path = Server.MapPath("~/Content/Users");
+                string filename = Path.GetFileName(Picture.FileName);
+                string fullpath = Path.Combine(path, filename);
+                Picture.SaveAs(fullpath);
+
+                admin.Picture = filename;
+
+                Session["Name"] = admin.Name;
+                Session["Picture"] = filename;
+
+                adminRepository.Update(admin);
+
+                return RedirectToAction("AdProfile", "Admin");
+            }
+            else
+                return RedirectToAction("AdProfile", "Admin");
+        }*/
         [Route("AddAdmin"),HttpPost]
         public IHttpActionResult AddAdmin(Admin admin)
         {
@@ -456,7 +500,12 @@ namespace DayTideWebApi.Controllers
         [Route("Mynotification"),HttpGet]
         public IHttpActionResult Mynotification(string id)
         {
-            return Ok(noticeRepository.GetNoticeByIdSend_For(id));
+            List<Notice> notice = noticeRepository.GetNoticeByIdSend_For(id);
+            if (!notice.Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(notice);
         }
         [Route("EditNotice"), HttpGet]
         public IHttpActionResult EditNotice(int id)
@@ -573,58 +622,7 @@ namespace DayTideWebApi.Controllers
              userRepository.DeleteUser(id);
              return RedirectToAction("ModeratorList", "Admin");
          }
-         [HttpGet]
-         public ActionResult Adprofile()
-         {
-             return View(adminRepository.GetUserById(Session["UserId"].ToString()));
-         }
-         [HttpGet]
-         public ActionResult AddModerator()
-         {
-             return View();
-         }
-         
-         [HttpGet]
-         public ActionResult AddDelMan()
-         {
-             return View();
-         }
-        
-        
-         
-         [HttpGet]
-         public ActionResult EditBio(string id)
-         {
-             return View(adminRepository.GetUserById(id));
-         }
-         [HttpPost]
-         public ActionResult EditBio(Admin admin, HttpPostedFileBase Picture)
-         {
-             if (Picture == null)
-             {
-                 Session["Name"] = admin.Name;
-                 adminRepository.Update(admin);
-                 return RedirectToAction("Adprofile", "Admin");
-             }
-             else if (Picture != null)
-             {
-                 string path = Server.MapPath("~/Content/Users");
-                 string filename = Path.GetFileName(Picture.FileName);
-                 string fullpath = Path.Combine(path, filename);
-                 Picture.SaveAs(fullpath);
-
-                 admin.Picture = filename;
-
-                 Session["Name"] = admin.Name;
-                 Session["Picture"] = filename;
-
-                 adminRepository.Update(admin);
-
-                 return RedirectToAction("AdProfile", "Admin");
-             }
-             else
-                 return RedirectToAction("AdProfile", "Admin");
-         }
+ 
  */
 
     }
