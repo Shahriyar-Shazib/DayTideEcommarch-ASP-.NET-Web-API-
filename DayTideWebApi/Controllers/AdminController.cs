@@ -68,34 +68,13 @@ namespace DayTideWebApi.Controllers
             return Ok(adminRepository.GetUserById(id));
         }
 
-        /*[HttpPost]
-        public ActionResult EditBio(Admin admin, HttpPostedFileBase Picture)
+        [Route("EditBio"), HttpPut]
+        public IHttpActionResult EditBio(Admin admin)
         {
-            if (Picture == null)
-            {
-                Session["Name"] = admin.Name;
-                adminRepository.Update(admin);
-                return RedirectToAction("Adprofile", "Admin");
-            }
-            else if (Picture != null)
-            {
-                string path = Server.MapPath("~/Content/Users");
-                string filename = Path.GetFileName(Picture.FileName);
-                string fullpath = Path.Combine(path, filename);
-                Picture.SaveAs(fullpath);
+            adminRepository.Update(admin);
+            return StatusCode(HttpStatusCode.Created);
 
-                admin.Picture = filename;
-
-                Session["Name"] = admin.Name;
-                Session["Picture"] = filename;
-
-                adminRepository.Update(admin);
-
-                return RedirectToAction("AdProfile", "Admin");
-            }
-            else
-                return RedirectToAction("AdProfile", "Admin");
-        }*/
+        }
         [Route("AddAdmin"),HttpPost]
         public IHttpActionResult AddAdmin(Admin admin)
         {
@@ -340,6 +319,16 @@ namespace DayTideWebApi.Controllers
             notice.Status = "Unread";
             noticeRepository.Insert(notice);
             return DeleveryManList();
+        }
+        [Route("Loadratingdelman"), HttpGet]
+        public IHttpActionResult Loadratingdelman(string id)
+        {
+            List<Delivery_Man_Rating> delmanrating = delevary_Man_RatingRepository.GetDeleveryMenRatingById(id);
+            if (!delmanrating.Any())
+            {
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            return Ok(delmanrating);
         }
 
         [Route("DelManReq"),HttpGet]
